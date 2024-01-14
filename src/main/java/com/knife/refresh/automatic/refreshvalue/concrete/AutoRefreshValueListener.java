@@ -2,7 +2,7 @@ package com.knife.refresh.automatic.refreshvalue.concrete;
 
 import com.knife.refresh.automatic.refreshvalue.context.BeanField;
 import com.knife.refresh.automatic.refreshvalue.context.BeanFieldHolder;
-import com.knife.refresh.common.util.AopUtil;
+import com.knife.util.util.AopUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationContext;
