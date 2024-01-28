@@ -1,4 +1,4 @@
-package com.knife.refresh.automatic.refreshvalue.context;
+package com.suchtool.nicerefresh.context;
 
 import lombok.Data;
 
