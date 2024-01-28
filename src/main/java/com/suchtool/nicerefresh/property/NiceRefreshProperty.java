@@ -4,5 +4,7 @@ import lombok.Data;
 
 @Data
 public class NiceRefreshProperty {
+    private Boolean enabled;
+
     private String packageName;
 }
