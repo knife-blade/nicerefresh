@@ -1,8 +1,8 @@
-package com.knife.refresh.automatic.refreshvalue.concrete;
+package com.suchtool.nicerefresh.listener;
 
-import com.knife.refresh.automatic.refreshvalue.context.BeanField;
-import com.knife.refresh.automatic.refreshvalue.context.BeanFieldHolder;
-import com.knife.util.util.AopUtil;
+import com.suchtool.nicerefresh.context.BeanField;
+import com.suchtool.nicerefresh.context.BeanFieldHolder;
+import com.suchtool.niceutil.util.AopUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationContext;
@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 
-public class AutoRefreshValueListener implements
+public class EnvironmentChangeListener implements
         ApplicationContextAware, ApplicationListener<EnvironmentChangeEvent> {
     private ApplicationContext applicationContext;
 
