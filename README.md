@@ -23,15 +23,6 @@ suchtool:
     enabled: true
 ```
 
-## 配置大全
-
-本组件支持使用SpringBoot配置文件进行配置，比如：application.yml。
-
-| 配置  | 描述  |  默认值 |
-| ------------ | ------------ | ------------ |
-| suchtool.nicerefresh.packageName  | 需要自动刷新的包 |  SpringBoot启动类所在的包 |
-
-
 ## 原理
 
 启动时扫描bean，如果有@Value，就记下来。在配置发生变化时，通过反射去修改@Value标注的字段。
@@ -42,5 +33,16 @@ suchtool:
 2. @RefreshScope 不能用在 @Scheduled、Listener、Timmer等类上，会有问题。
 
 本组没有上边这些失效的问题。
+
+## 详细配置
+
+本组件支持使用SpringBoot配置文件进行配置，比如：application.yml。
+
+| 配置                               | 描述       | 默认值               |
+|----------------------------------|----------|-------------------|
+| suchtool.nicerefresh.enabled     | 是否启用     | false             |
+| suchtool.nicerefresh.packageName | 需要自动刷新的包 | SpringBoot启动类所在的包 |
+
+
 
 
