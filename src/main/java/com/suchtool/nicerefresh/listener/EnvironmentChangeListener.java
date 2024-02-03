@@ -2,7 +2,7 @@ package com.suchtool.nicerefresh.listener;
 
 import com.suchtool.nicerefresh.context.BeanField;
 import com.suchtool.nicerefresh.context.BeanFieldHolder;
-import com.suchtool.niceutil.util.AopUtil;
+import com.suchtool.niceutil.util.spring.AopUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationContext;
