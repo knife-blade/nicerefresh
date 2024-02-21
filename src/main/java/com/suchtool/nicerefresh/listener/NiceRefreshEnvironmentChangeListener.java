@@ -1,7 +1,7 @@
 package com.suchtool.nicerefresh.listener;
 
-import com.suchtool.nicerefresh.context.BeanField;
-import com.suchtool.nicerefresh.context.BeanFieldHolder;
+import com.suchtool.nicerefresh.context.NiceRefreshBeanField;
+import com.suchtool.nicerefresh.context.NiceRefreshBeanFieldHolder;
 import com.suchtool.niceutil.util.spring.AopUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 
-public class EnvironmentChangeListener implements
+public class NiceRefreshEnvironmentChangeListener implements
         ApplicationContextAware, ApplicationListener<EnvironmentChangeEvent> {
     private ApplicationContext applicationContext;
 
@@ -33,15 +33,15 @@ public class EnvironmentChangeListener implements
 
     private void proceed(EnvironmentChangeEvent event) {
         for (String key : event.getKeys()) {
-            List<BeanField> beanFieldList = BeanFieldHolder.read(key);
-            if (CollectionUtils.isEmpty(beanFieldList)) {
+            List<NiceRefreshBeanField> niceRefreshBeanFieldList = NiceRefreshBeanFieldHolder.read(key);
+            if (CollectionUtils.isEmpty(niceRefreshBeanFieldList)) {
                 continue;
             }
-            for (BeanField beanField : beanFieldList) {
-                Object bean = applicationContext.getBean(beanField.getBeanTargetClass());
+            for (NiceRefreshBeanField niceRefreshBeanField : niceRefreshBeanFieldList) {
+                Object bean = applicationContext.getBean(niceRefreshBeanField.getBeanTargetClass());
                 Object targetBean = AopUtil.getTargetBean(bean);
                 try {
-                    Field field = targetBean.getClass().getDeclaredField(beanField.getFieldName());
+                    Field field = targetBean.getClass().getDeclaredField(niceRefreshBeanField.getFieldName());
                     field.setAccessible(true);
                     Object value = applicationContext.getEnvironment()
                             .getProperty(key, field.getType());
