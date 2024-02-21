@@ -1,7 +1,7 @@
 package com.suchtool.nicerefresh.runner;
 
-import com.suchtool.nicerefresh.context.BeanField;
-import com.suchtool.nicerefresh.context.BeanFieldHolder;
+import com.suchtool.nicerefresh.context.NiceRefreshBeanField;
+import com.suchtool.nicerefresh.context.NiceRefreshBeanFieldHolder;
 import com.suchtool.nicerefresh.property.NiceRefreshProperty;
 import com.suchtool.niceutil.util.spring.AopUtil;
 import com.suchtool.niceutil.util.spring.ApplicationContextHolder;
@@ -66,11 +66,11 @@ public class NiceRefreshApplicationRunner implements ApplicationRunner {
             return;
         }
 
-        BeanField beanField = new BeanField();
-        beanField.setBeanTargetClass(beanTargetClass);
-        beanField.setFieldName(field.getName());
+        NiceRefreshBeanField niceRefreshBeanField = new NiceRefreshBeanField();
+        niceRefreshBeanField.setBeanTargetClass(beanTargetClass);
+        niceRefreshBeanField.setFieldName(field.getName());
 
-        BeanFieldHolder.add(key, beanField);
+        NiceRefreshBeanFieldHolder.add(key, niceRefreshBeanField);
     }
 
     /**

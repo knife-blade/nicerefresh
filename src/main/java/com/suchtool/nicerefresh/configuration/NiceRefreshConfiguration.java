@@ -1,6 +1,6 @@
 package com.suchtool.nicerefresh.configuration;
 
-import com.suchtool.nicerefresh.listener.EnvironmentChangeListener;
+import com.suchtool.nicerefresh.listener.NiceRefreshEnvironmentChangeListener;
 import com.suchtool.nicerefresh.property.NiceRefreshProperty;
 import com.suchtool.nicerefresh.runner.NiceRefreshApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,8 +20,8 @@ public class NiceRefreshConfiguration {
     }
 
     @Bean(name = "com.suchtool.nicerefresh.environmentChangeListener")
-    public EnvironmentChangeListener environmentChangeListener() {
-        return new EnvironmentChangeListener();
+    public NiceRefreshEnvironmentChangeListener environmentChangeListener() {
+        return new NiceRefreshEnvironmentChangeListener();
     }
 
     @Bean(name = "com.suchtool.nicerefresh.niceRefreshProperty")
