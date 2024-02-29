@@ -48,7 +48,7 @@ public class NiceRefreshApplicationRunner implements ApplicationRunner {
     private void checkAndRecord(Object bean, List<String> packageNameList) {
         Class<?> targetCls = AopUtil.getTargetClass(bean);
         for (String packageName : packageNameList) {
-            if (targetCls.getName().startsWith(packageName)) {
+            if (targetCls.getName().startsWith(packageName.trim())) {
                 Field[] declaredFields = targetCls.getDeclaredFields();
                 for (Field field : declaredFields) {
                     if (field.isAnnotationPresent(Value.class)) {
