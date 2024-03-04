@@ -1,6 +1,6 @@
 # nice-refresh
 ## 介绍
-本组件用于自动刷新Spring项目中@Value的值。
+nicerefresh：自动刷新Spring项目中@Value的值。
 
 ## 快速开始
 ### 1.引入依赖
@@ -8,7 +8,7 @@
 ```
 <dependency>
     <groupId>com.suchtool</groupId>
-    <artifactId>nice-refresh-spring-boot-starter</artifactId>
+    <artifactId>nicerefresh-spring-boot-starter</artifactId>
     <version>{newest-version}</version>
 </dependency>
 
