@@ -1,4 +1,4 @@
-# nice-refresh
+# nicerefresh
 ## 介绍
 nicerefresh：自动刷新Spring项目中@Value的值。
 
