@@ -12,7 +12,7 @@
 
     <groupId>com.suchtool</groupId>
     <artifactId>nicerefresh-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>nicerefresh-spring-boot-starter</name>
     <description>refresh value automatically for SpringBoot project</description>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>com.suchtool</groupId>
             <artifactId>nicetool-spring-boot-starter</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
         </dependency>
 
         <dependency>

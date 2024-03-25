@@ -5,26 +5,23 @@ import com.suchtool.nicerefresh.context.NiceRefreshBeanFieldHolder;
 import com.suchtool.nicerefresh.property.NiceRefreshProperty;
 import com.suchtool.nicetool.util.spring.AopUtil;
 import com.suchtool.nicetool.util.spring.ApplicationContextHolder;
+import com.suchtool.nicetool.util.spring.SpringBootUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class NiceRefreshApplicationRunner implements ApplicationRunner {
     @Autowired(required = false)
     private NiceRefreshProperty niceRefreshProperty;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        Map<String, Object> runClassBeanMap = ApplicationContextHolder.getContext()
-                .getBeansWithAnnotation(SpringBootApplication.class);
+    public void run(ApplicationArguments args) {
 
         // 支持自动更新的包名。多个用,隔开，如果没指定，则取启动类所在的包
         String packageName = null;
@@ -33,8 +30,7 @@ public class NiceRefreshApplicationRunner implements ApplicationRunner {
             packageName = niceRefreshProperty.getPackageName();
         } else {
             // 获得启动类
-            Object runObject = runClassBeanMap.entrySet().iterator().next().getValue();
-            packageName = AopUtil.getTargetClass(runObject).getPackage().getName();
+            packageName = SpringBootUtil.parseRunClassPackage();
         }
 
         List<String> packageNameList = Arrays.asList(packageName.split(","));
