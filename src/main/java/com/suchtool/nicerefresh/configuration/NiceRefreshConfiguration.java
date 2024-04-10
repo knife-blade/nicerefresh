@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 自动刷新Bean里@Value的值
  */
-@Configuration
+@Configuration(value = "com.suchtool.nicerefresh.niceRefreshConfiguration", proxyBeanMethods = false)
 @ConditionalOnProperty(name = "suchtool.nicerefresh.enabled", havingValue = "true")
 public class NiceRefreshConfiguration {
     @Bean(name = "com.suchtool.nicerefresh.niceRefreshApplicationRunner")
