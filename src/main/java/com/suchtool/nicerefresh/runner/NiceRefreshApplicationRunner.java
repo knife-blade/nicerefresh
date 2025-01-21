@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,18 +24,15 @@ public class NiceRefreshApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-
-        // 支持自动更新的包名。多个用,隔开，如果没指定，则取启动类所在的包
-        String packageName = null;
-        if (niceRefreshProperty != null
-            && StringUtils.hasText(niceRefreshProperty.getPackageName())) {
-            packageName = niceRefreshProperty.getPackageName();
-        } else {
+        // 支持自动更新的包名。如果没指定，则取启动类所在的包
+        List<String> packageNameList = niceRefreshProperty.getPackageName();
+        if (CollectionUtils.isEmpty(packageNameList)) {
+            packageNameList = new ArrayList<>();
             // 获得启动类
-            packageName = SpringBootUtil.parseRunClassPackage();
+            String runPackageName = SpringBootUtil.parseRunClassPackage();
+            packageNameList.add(runPackageName);
         }
 
-        List<String> packageNameList = Arrays.asList(packageName.split(","));
         String[] beanDefinitionNames = ApplicationContextHolder.getContext().getBeanDefinitionNames();
         for (String beanDefinitionName : beanDefinitionNames) {
             Object bean = ApplicationContextHolder.getContext().getBean(beanDefinitionName);

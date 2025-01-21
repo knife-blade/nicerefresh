@@ -32,16 +32,16 @@ suchtool:
 1. 假如A组件注入B组件，B组件上使用了@RefreshScope并使用@Value获取配置，那么A组件上必须也加上@RefreshScope，否则无法实现动态刷新。
 2. @RefreshScope 不能用在 @Scheduled、Listener、Timmer等类上，会有问题。
 
-本组没有上边这些失效的问题。
+本组件没有上边这些失效的问题。
 
 ## 详细配置
 
 本组件支持使用SpringBoot配置文件进行配置，比如：application.yml。
 
-| 配置                               | 描述       | 默认值               |
-|----------------------------------|----------|-------------------|
-| suchtool.nicerefresh.enabled     | 是否启用     | false             |
-| suchtool.nicerefresh.packageName | 需要自动刷新的包 | SpringBoot启动类所在的包 |
+| 配置                                | 描述         | 默认值               |
+|-----------------------------------|------------|-------------------|
+| suchtool.nicerefresh.enabled      | 是否启用       | false             |
+| suchtool.nicerefresh.package-name | 需要自动刷新的包前缀 | SpringBoot启动类所在的包 |
 
 
 
