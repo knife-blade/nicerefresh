@@ -2,12 +2,14 @@ package com.suchtool.nicerefresh.property;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class NiceRefreshProperty {
     private Boolean enabled;
 
     /**
-     * 要刷新的包名，多个用逗号隔开
+     * 要刷新的包名
      */
-    private String packageName;
+    private List<String> packageName;
 }
