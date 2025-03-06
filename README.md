@@ -38,11 +38,9 @@ suchtool:
 
 本组件支持使用SpringBoot配置文件进行配置，比如：application.yml。
 
-| 配置                                | 描述         | 默认值               |
+| 配置                              | 描述       | 默认值            |
 |-----------------------------------|------------|-------------------|
-| suchtool.nicerefresh.enabled      | 是否启用       | false             |
-| suchtool.nicerefresh.package-name | 需要自动刷新的包前缀 | SpringBoot启动类所在的包 |
-
-
+| suchtool.nicerefresh.enabled      | 是否启用       | false         |
+| suchtool.nicerefresh.package-name | 需要自动刷新的包前缀。支持多个（逗号隔开，或者用-分行） | SpringBoot启动类所在的包 |
 
 
