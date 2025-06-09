@@ -12,4 +12,9 @@ public class NiceRefreshProperty {
      * 要刷新的包名
      */
     private List<String> packageName;
+
+    /**
+     * 启用调试
+     */
+    private Boolean enableDebug = false;
 }
