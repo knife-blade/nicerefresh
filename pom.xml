@@ -12,7 +12,7 @@
 
     <groupId>com.suchtool</groupId>
     <artifactId>nicerefresh-spring-boot-starter</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 
     <name>nicerefresh-spring-boot-starter</name>
     <description>refresh value automatically for SpringBoot project</description>
@@ -58,12 +58,19 @@
         <dependency>
             <groupId>com.suchtool</groupId>
             <artifactId>nicetool-spring-boot-starter</artifactId>
-            <version>1.1.26</version>
+            <version>1.1.28</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <artifactId>spring-cloud-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.7.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

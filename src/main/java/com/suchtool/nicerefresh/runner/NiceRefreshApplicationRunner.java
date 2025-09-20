@@ -6,6 +6,7 @@ import com.suchtool.nicerefresh.property.NiceRefreshProperty;
 import com.suchtool.nicetool.util.spring.AopUtil;
 import com.suchtool.nicetool.util.spring.ApplicationContextHolder;
 import com.suchtool.nicetool.util.spring.SpringBootUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -18,12 +19,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class NiceRefreshApplicationRunner implements ApplicationRunner {
-    @Autowired(required = false)
     private NiceRefreshProperty niceRefreshProperty;
+
+    public NiceRefreshApplicationRunner(NiceRefreshProperty niceRefreshProperty) {
+        this.niceRefreshProperty = niceRefreshProperty;
+    }
 
     @Override
     public void run(ApplicationArguments args) {
+        try {
+            if (!niceRefreshProperty.getEnabled()) {
+                return;
+            }
+
+            if (niceRefreshProperty.getDebug()) {
+                log.info("nicerefresh runner process start");
+            }
+            process();
+
+            if (niceRefreshProperty.getDebug()) {
+                log.info("nicerefresh runner process end");
+            }
+        } catch (Exception e) {
+            log.error("nicerefresh runner error", e);
+        }
+    }
+
+    private void process() {
         // 支持自动更新的包名。如果没指定，则取启动类所在的包
         List<String> packageNameList = niceRefreshProperty.getPackageName();
         if (CollectionUtils.isEmpty(packageNameList)) {
@@ -37,6 +61,10 @@ public class NiceRefreshApplicationRunner implements ApplicationRunner {
         for (String beanDefinitionName : beanDefinitionNames) {
             Object bean = ApplicationContextHolder.getContext().getBean(beanDefinitionName);
             checkAndRecord(bean, packageNameList);
+        }
+
+        if (niceRefreshProperty.getDebug()) {
+            log.info("nicerefresh runner record key: {}", NiceRefreshBeanFieldHolder.readAll().keySet());
         }
     }
 
