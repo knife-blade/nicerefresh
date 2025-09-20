@@ -21,8 +21,11 @@ public class NiceRefreshEnvironmentChangeListener implements
         ApplicationContextAware, ApplicationListener<EnvironmentChangeEvent> {
     private ApplicationContext applicationContext;
 
-    @Autowired(required = false)
-    private NiceRefreshProperty niceRefreshProperty;
+    private final NiceRefreshProperty niceRefreshProperty;
+
+    public NiceRefreshEnvironmentChangeListener(NiceRefreshProperty niceRefreshProperty) {
+        this.niceRefreshProperty = niceRefreshProperty;
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -31,33 +34,50 @@ public class NiceRefreshEnvironmentChangeListener implements
 
     @Override
     public void onApplicationEvent(EnvironmentChangeEvent event) {
-        if (this.applicationContext.equals(event.getSource())
-                // Backwards compatible
-                || event.getKeys().equals(event.getSource())) {
-            proceed(event);
+        try {
+            if (!niceRefreshProperty.getEnabled()) {
+                return;
+            }
+
+            if (this.applicationContext.equals(event.getSource())
+                    // Backwards compatible
+                    || event.getKeys().equals(event.getSource())) {
+                if (niceRefreshProperty.getDebug()) {
+                    log.info("nicerefresh process start");
+                }
+                process(event);
+                if (niceRefreshProperty.getDebug()) {
+                    log.info("nicerefresh process end");
+                }
+            }
+        } catch (Exception e) {
+            log.error("nicerefresh process EnvironmentChangeEvent error", e);
         }
     }
 
-    private void proceed(EnvironmentChangeEvent event) {
+    private void process(EnvironmentChangeEvent event) {
         for (String key : event.getKeys()) {
             List<NiceRefreshBeanField> niceRefreshBeanFieldList = NiceRefreshBeanFieldHolder.read(key);
             if (CollectionUtils.isEmpty(niceRefreshBeanFieldList)) {
                 continue;
             }
+            if (niceRefreshProperty.getDebug()) {
+                log.info("nicerefresh process key start. Key:{}", key);
+            }
             for (NiceRefreshBeanField niceRefreshBeanField : niceRefreshBeanFieldList) {
                 Object bean = applicationContext.getBean(niceRefreshBeanField.getBeanTargetClass());
                 Object targetBean = AopUtil.getTargetBean(bean);
                 try {
-                    Field field = targetBean.getClass().getDeclaredField(niceRefreshBeanField.getFieldName());
+                    Field field = targetBean.getClass().getDeclaredField(
+                            niceRefreshBeanField.getFieldName());
                     field.setAccessible(true);
                     Object value = applicationContext.getEnvironment()
                             .getProperty(key, field.getType());
                     field.set(targetBean, value);
                     field.setAccessible(false);
 
-                    if (niceRefreshProperty.getEnableDebug() != null
-                        && niceRefreshProperty.getEnableDebug()) {
-                        log.info("Nicerefresh update property successfully。new value: {}, key: {}, beanName：{}, field: {}",
+                    if (niceRefreshProperty.getDebug()) {
+                        log.info("nicerefresh update value successfully。new value: {}, key: {}, beanName：{}, field: {}",
                                 value == null ? "null" : value.toString(),
                                 key,
                                 bean.getClass().getName(),
@@ -65,8 +85,11 @@ public class NiceRefreshEnvironmentChangeListener implements
                         );
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    log.error("nicerefresh process EnvironmentChangeEvent error(key:{}) ", key, e);
                 }
+            }
+            if (niceRefreshProperty.getDebug()) {
+                log.info("nicerefresh process key end. Key:{}", key);
             }
         }
     }

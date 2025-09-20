@@ -35,4 +35,8 @@ public class NiceRefreshBeanFieldHolder {
     public static List<NiceRefreshBeanField> read(String key) {
         return keyObjectFieldMap.get(key);
     }
+
+    public static Map<String, List<NiceRefreshBeanField>> readAll() {
+        return keyObjectFieldMap;
+    }
 }
