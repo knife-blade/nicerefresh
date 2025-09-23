@@ -8,11 +8,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
 
 @Slf4j
 public class NiceRefreshApolloConfigChangeApplicationRunner
@@ -22,16 +19,12 @@ public class NiceRefreshApolloConfigChangeApplicationRunner
 
     private final NiceRefreshProperty niceRefreshProperty;
 
-    private final RefreshScope refreshScope;
-
     @Value("${apollo.bootstrap.namespaces}")
     private String namespaces;
 
-    public NiceRefreshApolloConfigChangeApplicationRunner(NiceRefreshProperty niceRefreshProperty,
-                                                          RefreshScope refreshScope
-    ) {
+    public NiceRefreshApolloConfigChangeApplicationRunner(
+            NiceRefreshProperty niceRefreshProperty) {
         this.niceRefreshProperty = niceRefreshProperty;
-        this.refreshScope = refreshScope;
     }
 
     @Override
@@ -43,7 +36,7 @@ public class NiceRefreshApolloConfigChangeApplicationRunner
 
             Config config = ConfigService.getConfig(namespaces);
             config.addChangeListener(new NiceRefreshApolloConfigChangeListener(
-                    niceRefreshProperty, refreshScope, applicationContext));
+                    niceRefreshProperty, applicationContext));
 
             if (niceRefreshProperty.getDebug()) {
                 log.info("nicerefresh apollo config change application runner end");
