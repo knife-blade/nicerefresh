@@ -1,14 +1,13 @@
 package com.suchtool.nicerefresh.configuration;
 
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
-import com.suchtool.nicerefresh.listener.apollo.NiceRefreshApolloConfigChangeApplicationRunner;
 import com.suchtool.nicerefresh.listener.NiceRefreshEnvironmentChangeListener;
+import com.suchtool.nicerefresh.listener.apollo.NiceRefreshApolloConfigChangeApplicationRunner;
 import com.suchtool.nicerefresh.property.NiceRefreshProperty;
 import com.suchtool.nicerefresh.runner.NiceRefreshApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,7 +28,6 @@ public class NiceRefreshConfiguration {
         return new NiceRefreshApplicationRunner(niceRefreshProperty);
     }
 
-
     @Bean(name = "com.suchtool.nicerefresh.niceRefreshEnvironmentChangeListener")
     @ConditionalOnProperty(name = "suchtool.nicerefresh.update-annotation", havingValue = "true")
     public NiceRefreshEnvironmentChangeListener niceRefreshEnvironmentChangeListener(NiceRefreshProperty niceRefreshProperty) {
@@ -40,8 +38,7 @@ public class NiceRefreshConfiguration {
     @ConditionalOnProperty(name = "suchtool.nicerefresh.publish-event", havingValue = "true")
     @ConditionalOnClass(ConfigChangeEvent.class)
     public NiceRefreshApolloConfigChangeApplicationRunner niceRefreshApolloConfigChangeListener(
-            NiceRefreshProperty niceRefreshProperty,
-            RefreshScope refreshScope) {
-        return new NiceRefreshApolloConfigChangeApplicationRunner(niceRefreshProperty, refreshScope);
+            NiceRefreshProperty niceRefreshProperty) {
+        return new NiceRefreshApolloConfigChangeApplicationRunner(niceRefreshProperty);
     }
 }

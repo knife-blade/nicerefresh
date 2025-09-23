@@ -16,17 +16,13 @@ import org.springframework.context.ApplicationListener;
 
 @Slf4j
 public class NiceRefreshApolloConfigChangeListener implements ConfigChangeListener {
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     private final NiceRefreshProperty niceRefreshProperty;
 
-    private final RefreshScope refreshScope;
-
     public NiceRefreshApolloConfigChangeListener(NiceRefreshProperty niceRefreshProperty,
-                                                 RefreshScope refreshScope,
                                                  ApplicationContext applicationContext) {
         this.niceRefreshProperty = niceRefreshProperty;
-        this.refreshScope = refreshScope;
         this.applicationContext = applicationContext;
     }
 
@@ -68,6 +64,5 @@ public class NiceRefreshApolloConfigChangeListener implements ConfigChangeListen
     private void refreshProperties(ConfigChangeEvent changeEvent) {
         // 更新相应的bean的属性值，主要是存在@ConfigurationProperties注解的bean
         this.applicationContext.publishEvent(new EnvironmentChangeEvent(changeEvent.changedKeys()));
-        refreshScope.refreshAll();
     }
 }
