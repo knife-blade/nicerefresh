@@ -1,6 +1,11 @@
 # nice-refresh
 ## 1 介绍
-nicerefresh：自动刷新。支持：刷新Spring项目中的@Value的值、Property的值。
+nicerefresh：自动刷新。
+
+**特性**
+
+1. 支持：刷新Spring项目中的@Value的值、Property的值。
+2. 支持：SpringBoot2、SpringBoot3
 
 **为什么写这个组件？**
 

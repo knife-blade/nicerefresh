@@ -62,7 +62,7 @@ public class NiceRefreshApolloConfigChangeListener implements ConfigChangeListen
     }
 
     private void refreshProperties(ConfigChangeEvent changeEvent) {
-        // 更新相应的bean的属性值，主要是存在@ConfigurationProperties注解的bean
+        // ConfigurationPropertiesRebinder.onApplicationEvent会去重新创建Property，属性因此得到更新
         this.applicationContext.publishEvent(new EnvironmentChangeEvent(changeEvent.changedKeys()));
     }
 }
